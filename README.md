@@ -2,29 +2,34 @@
 
 
 ## Proyecto a desarrollar.
-#### Infraestructura virtual para mi TFG sobre detección de plagio en R. 
+#### Sistema de planificación de entrenamiento físico. 
 
 ## Descripción.
 
-Mi trabajo de fin de grado consistió en buscar una solución al problema de que no existía una forma eficaz y eficiente de detectar plagio entre programas escritos en R de alumnos. Es por esto que tuve que añadir un módulo a una aplicación ya existente para la detección de plagio en código fuente sobre un conjunto de archivos escritos en un mismo lenguaje de programación. Esta aplicación es llamada [JPLAG](https://github.com/jplag/jplag) y el módulo que he creado permite que JPLAG también pueda detectar plagios en programas escritos en R.
+Para conseguir mejorar consistentes en nuestro rendimiento físico es necesario salir a entrenar de forma regular siguiendo una estructura de entrenamiento concreta. 
+Para hacer esto la gente se suele organizar mediante plannings de entrenamiento aunque en estos no se puede predecir si los días elegidos son los idóneos para esto ya que puede hacer más frío o calor de lo esperado, o incluso llover o granizar. Lo que haría que no pudiésemos entrenar ese día y esto, además de desmotivar, rompe en gran parte los hábitos saludables que tanto nos cuesta conseguir.
 
-JPLAG era posible de usar como servicio web durante las primeras versiones de su desarrollo, pero actualmente no está actualizado con los nuevos lenguajes y bibliotecas añadidas (además de que no permite el acceso a usuarios que no estuviesen ya en su base de datos de antes). Esto nos obliga a que, para poder ejecutar JPLAG, lo descargemos sobre nuestra propia máquina local y lo ejecutemos.
+En este proyecto propongo desarrollar un servicio en la nube en el que se podrá gestionar la planificación deportiva día a día para la próxima semana, mes, año o cualquier cantidad de tiempo que se quiera entrenar, teniendo en cuanta las condiciones atmosféricas de cada día, en caso de que se fuese a entrenar fuera.
 
-Por esta razón,en este proyecto crearemos una infraestructura donde poder desplegar [JPLAG con mi módulo](https://github.com/AntonioJavierRP/jplag) donde los usuarios se puedan crear una cuenta y ejecutar el programa de forma remota sobre un conjunto de archivos que ellos mismos suban a la aplicación.
+
 
 ## Cliente potencial
-Cualquier institución educativa que desee aplicar a este software de detección de plagio en los trabajos de sus alumnos.
+Cualquier persona que esté interesada en poder organizar sus futuras sesiones de ejercicios de forma que las condiciones meteorológicas no se interpongan con estas.
 
 ## Arquitectura 
-Se utilizará una arquitectura basada en microservicios, para poder tener módulos independientes(servicios) para las diferentes partes en las que se divide la infraestructura:
+Se utilizará una arquitectura basada en microservicios, para poder tener módulos independientes(servicios) para las diferentes partes en las que se divide la sistema y poder escalar cada uno de estos de forma individual.
 
-- Módulo de registro de los usuarios.
-- Módulo de procesado de los archivos fuentes para convertirlos en tokens del lenguaje que se especifica.
-- Módulo de aplicación del algoritmo de JPLAG para comparación de archivos.
-- Módulo de almacenamiento de resultados y usuarios usando base de datos NoSQL.
+Podemos listar los siguientes servicios:
 
-Además nos interesa esta arquitectura para poder escalar el sistema de forma independiente añadiendo soporte a más lenguajes por ejemplo o algún módulo de visualización de los resultados.
+- Servicio de almacen de los datos del usuario, su plan y sus días de entrenamiento. Para esto usaré una base de datos NoSQL MongoDB.
+- Módulo de procesado de la información que ha especificado el usuario sobre su entrenamiento teniendo en cuenta sus preferencias y combinándolo con los datos referentes al tiempo atmosférico.
+- Servicio de LOG para monitorización de la aplicación.
 
+
+Así mismo, existirá un microservicio del que obtendremos los datos meteorológicos de los próximos 15 días, pero este no lo desarrollaremos nosotros sino que utilizaremos el del proyecto de una compañera.
+
+## Lenguaje Utilizado
+Se utilizará javascript junto al framework Express para construir el servicio web.
 
 
 ## Hitos del proyecto
