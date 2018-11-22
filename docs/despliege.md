@@ -67,4 +67,7 @@ Para ello tan solo he tenido que vincular mi cuenta de github con Codeship, crea
 
 ![Captura Codeship](img/codeship_heroku.png "Conexion heroku y codeship")
 
+URL de despliege hito 2
 
+
+Despliege hecho en https://schedule-cloud-computing.herokuapp.com/
