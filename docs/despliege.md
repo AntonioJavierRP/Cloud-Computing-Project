@@ -65,6 +65,6 @@ Para especificar los tests he usado Supertest y Mocha.
 Para que cuando realizemos un push desde nuestro a equipo local al master de github el servicio se despliege automáticamente a Heroku he usado [Codeship](https://codeship.com/). 
 Para ello tan solo he tenido que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en codeship en el que especifico el repositorio de mi proyecto de CC en github y por último configuro el deployment en Heroku desde codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
 
-![Captura Codeship](codeship_heroku.png "Conexion heroku y codeship")
+![Captura Codeship](img/codeship_heroku.png "Conexion heroku y codeship")
 
 
