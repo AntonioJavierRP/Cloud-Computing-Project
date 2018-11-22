@@ -1,4 +1,4 @@
-Despliege https://schedule-cloud-computing.herokuapp.com/
+Despliegue https://schedule-cloud-computing.herokuapp.com/
 
 
 # Hito 2. Creación de un microservicio y despliegue en PaaS
@@ -54,15 +54,15 @@ He creado tres clases:
 
 - Eliminar actividad concreta en '/plan/actividades/:dia/:id'
 
-## Despliege en heroku
+## Despliegue en heroku
 
-Para realizar el despliege en Heroku en seguido las instrucciones básicas de la [página de documentación de heroku sobre node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+Para realizar el despliegue en Heroku en seguido las instrucciones básicas de la [página de documentación de heroku sobre node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 
 Para realizar los tests de cada operación he creado un fichero test.js dentro de la carpeta test del proyecto.
 Para especificar los tests he usado Supertest y Mocha.
 
 ### Conexión de github con Heroku
-Para que cuando realizemos un push desde nuestro a equipo local al master de github el servicio se despliege automáticamente a Heroku he usado [Codeship](https://codeship.com/). 
+Para que cuando realizemos un push desde nuestro a equipo local al master de github el servicio se despliegue automáticamente a Heroku he usado [Codeship](https://codeship.com/). 
 Para ello tan solo he tenido que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en codeship en el que especifico el repositorio de mi proyecto de CC en github y por último configuro el deployment en Heroku desde codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
 
 ![Captura Codeship](img/codeship_heroku.png "Conexion heroku y codeship")
