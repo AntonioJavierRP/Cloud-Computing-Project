@@ -27,7 +27,7 @@ plan.aniadirActividad = act4
 app.get('/', (req,res) => {
     res.send({
         "status":"OK",
-        "ejemplo":{"ruta":"/plan/usuario",
+        "ejemplo":{"rutas":"/plan/usuario",
                 "valor":usuario}
             });
 });
