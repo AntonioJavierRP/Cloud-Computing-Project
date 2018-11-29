@@ -1,4 +1,4 @@
-Despliegue https://schedule-cloud-computing.herokuapp.com/
+Despliegue https://planificacion-deportiva.herokuapp.com/
 
 
 # Hito 2. Creación de un microservicio y despliegue en PaaS
@@ -26,7 +26,7 @@ He creado tres clases:
     -   Una hora de inicio del ejercicio.
     -   Y un booleano que indica si se va a realizar o no en el exterior.
 
-### Cada una de las acciones que se puede hacer sobre esta estructura es posible llevarlo a cabo mediante operaciones HTTP.
+### Cada una de las acciones que se puede hacer sobre esta estructura se puede llevar  a cabo mediante operaciones HTTP:
 
 #### Consultas con GET
 
@@ -54,27 +54,62 @@ He creado tres clases:
 
 - Eliminar actividad concreta en '/plan/actividades/:dia/:id'
 
-## Despliegue en heroku
+He ido comprobando el correcto funcionamiento de cada una de estas operaciones mediante [Postman](https://www.getpostman.com/).
 
-Para realizar el despliegue en Heroku en seguido las instrucciones básicas de la [página de documentación de heroku sobre node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+## Tests
 
-En el archivo procfile se especifica los comandos que tiene que ejecutar mi app de Heroku al iniciarse.
-
-Para realizar los tests de cada operación he creado un fichero test.js dentro de la carpeta test del proyecto.
+Para realizar los tests, de cada una de las operaciones que acabo de mencionar, he creado un fichero test.js dentro de la carpeta test del proyecto.
 Para especificar los tests he usado Supertest y Mocha.
 
-### Conexión de github con Heroku
-Para que cuando realicemos un push desde nuestro a equipo local al master de Github el servicio se despliegue automáticamente a Heroku he usado [Codeship](https://codeship.com/). 
 
+Así mismo, he usado Travis CI para que se ejecuten los tests que he creado cada vez que se haga un push al repositorio master.
 
-Para ello tan solo he tenido que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en Codeship en el que especifico el repositorio de mi proyecto de CC en Github y por último configuro el deployment en Heroku desde codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
+Para ello he iniciado sesión en [Travis](https://travis-ci.org/) con mi cuenta de Github para que quede así vinculada y he seleccionado [este](https://github.com/AntonioJavierRP/Cloud-Computing-Project) repositorio para que realize los test que le he especificado en el archivo [.travis.yml](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/.travis.yml)
+para que, cada vez que el respositorio se modifique, compruebe que funciona todo correctamente.
+
+## Despliegue en Heroku
+
+Para realizar el despliegue en Heroku en primer lugar he seguido las instrucciones básicas de la [página de documentación de heroku sobre node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs).
+
+Los pasos seguidos para el despliegue según este tutorial son:
+1. Instalar Heroku CLI.
+2. Hacer  <span style="color:purple">heroku create</span> desde la terminal dentro de nuestra carpeta local del reposotorio.
+3. Hacer <span style="color:purple">git push heroku master</span>.
+
+Tendremos en nuestra carpeta ahora una archivo llamado "Procfile", en este archivo se indica a Heroku los comandos que tiene que ejecutar mi app de Heroku al iniciarse en formato <process type>: <command>, en nuestro caso es:
+
+~~~~
+web: node index.js
+~~~~
+
+"web" porque se trata de una aplicación web.
+
+"node index.js" es el comando que tiene que ejecutar cada dyno.
+
+Y con esto ya estaría despleguado en Heroku en el enlace con nombre aleatorio que se creó cuando hicimos el segundo paso.
+
+Pero así no es como queremos que se realice el despliegue. Queremos poder estar trabajando localmente en nuestro ordenador y que cuando hagamos algún cambio al proyecto y le hagamos push a Github, se realice un despliegue automático a Heroku desde Github una vez se hayan pasado los tests.
+
+Para hacer esto en primer lugar hice uso de [Codeship](https://codeship.com/):
+
+Tuve que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en Codeship en el que especifiqué el repositorio de mi proyecto de CC en Github y por último configuré el deployment en Heroku desde Codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
 
 ![Captura Codeship](img/codeship_heroku.png "Conexion heroku y codeship")
 
+La página del despliegue en codeship es la siguiente: https://schedule-cloud-computing.herokuapp.com/
 
-Así mismo Codeship se encarga de realizar también los tests pertinentes antes de que se realize el despliege en Heroku.
 
-Para configurar esto, en la pestaña de Codeship de Test he especificado los comandos necesarios para el despliege y en test pipeline he especificado que ejecute "npm test" para que así se pasen los test que especifiqué en el archivo test.js.
+Codeship se encarga tambíen de hacer los tests, configurándolo en la pestaña de Test en "comandos necesarios para el despliegue" y en "test pipeline", especificado que ejecute "npm test" para que así se pasen los test que especifiqué en el archivo test.js.
 
-Por último, he creado un archivo .travis.yml en el que también compruebo estos test, pero no realizo el despliege desde este ya que esto se hace automáticamente con Codeship.
+Pero de esta forma no tenemos el script que ordena que se ejecuten los tests en nuestro propio repositorio. Y nos conviene tenerlo, por lo que en lugar de usar Codeship podemos conseguir lo mismo configurando el despliegue automático en la página de Heroku, vinculando nuestra cuenta de Github.
 
+Para ello tan solo tenemos que:
+* En nuestra "Dashboard" de Heroku, seleccionamos "Create new app".
+* Elegimos nombre y región.
+* Nos vamos a la pestaña Deploy de nuestra app creada.
+* En Deployment method seleccionamos Github.
+* Iniciamos sesión con nuestra cuenta de Github.
+* Seleccionamos el repositorio en el que se encuentra nuestro proyecto.
+* Y por último seleccionamos enable automatic deploys.
+
+No olvidar tambien seleccionar la acción "Wait for CI to pass before deploy", ya que esto hará que no se despliegue a Heroku hasta que se pasen los tests Travis CI.
