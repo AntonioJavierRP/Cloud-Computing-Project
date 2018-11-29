@@ -39,7 +39,8 @@ Se utilizará javascript junto al framework Express para construir el servicio w
 ## Licencia
 GNU General Public License v3.0.
 
-URL de despliegue hito 2 https://schedule-cloud-computing.herokuapp.com/
+## Documentación sobre el despliege (y resto de información sobre el Hito 2)
+https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/despliegue.md
 
 
 Despliegue hecho en https://schedule-cloud-computing.herokuapp.com/
