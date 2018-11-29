@@ -58,16 +58,23 @@ He creado tres clases:
 
 Para realizar el despliegue en Heroku en seguido las instrucciones básicas de la [página de documentación de heroku sobre node js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 
+En el archivo procfile se especifica los comandos que tiene que ejecutar mi app de Heroku al iniciarse.
+
 Para realizar los tests de cada operación he creado un fichero test.js dentro de la carpeta test del proyecto.
 Para especificar los tests he usado Supertest y Mocha.
 
 ### Conexión de github con Heroku
 Para que cuando realizemos un push desde nuestro a equipo local al master de github el servicio se despliegue automáticamente a Heroku he usado [Codeship](https://codeship.com/). 
-Para ello tan solo he tenido que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en codeship en el que especifico el repositorio de mi proyecto de CC en github y por último configuro el deployment en Heroku desde codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
+
+
+Para ello tan solo he tenido que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en Codeship en el que especifico el repositorio de mi proyecto de CC en Github y por último configuro el deployment en Heroku desde codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
 
 ![Captura Codeship](img/codeship_heroku.png "Conexion heroku y codeship")
 
-URL de despliegue hito 2 https://schedule-cloud-computing.herokuapp.com/
 
+Así mismo Codeship se encarga de realizar también los tests pertinentes antes de que se realize el despliege en Heroku.
 
-Despliegue hecho en https://schedule-cloud-computing.herokuapp.com/
+Para configurar esto, en la pestaña de Codeship de Test he especificado los comandos necesarios para el despliege y en test pipeline he especificado que ejecute "npm test" para que así se pasen los test que especifiqué en el archivo test.js.
+
+Por último, he creado un archivo .travis.yml en el que también compruebo estos test, pero no realizo el despliege desde este ya que esto se hace automáticamente con Codeship.
+
