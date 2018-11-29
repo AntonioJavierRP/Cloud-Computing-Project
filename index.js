@@ -26,7 +26,7 @@ plan.aniadirActividad = act4
 
 app.get('/', (req,res) => {
     res.send({
-        "status":"OK okokok",
+        "status":"OK",
         "ejemplo":{"ruta":"/plan/usuario",
                 "valor":usuario}
             });
@@ -57,7 +57,7 @@ app.get('/plan/usuario/rain', (req,res) => {
 
 // Modificar detalles de usuario
 
-app.put('/plan/usuario', (req,res) => {
+app.post('/plan/usuario', (req,res) => {
     const {error} = validateUser(req.body);
 
     if(error){
@@ -101,7 +101,7 @@ app.get('/plan/actividades/:dia/:id', (req,res) =>{
 // Añadir actividad
 
 /*
-Plantilla para postman para comprobar rapido post y put de actividades:
+Plantilla para postman para comprobar rapido put y post de actividades:
 {
     "dia": 3,
     "tipo": "cycling",
@@ -110,7 +110,7 @@ Plantilla para postman para comprobar rapido post y put de actividades:
 }
 */
 
-app.post('/plan/actividades', (req,res) =>{
+app.put('/plan/actividades', (req,res) =>{
     const {error} = validateActivity(req.body);
 
     if(error){
@@ -137,7 +137,7 @@ app.post('/plan/actividades', (req,res) =>{
 
 // Modificar actividad
 
-app.put('/plan/actividades/:dia/:id', (req,res) =>{
+app.post('/plan/actividades/:dia/:id', (req,res) =>{
     const activity = plan.actividades.find(a => a.dia === parseInt(req.params.dia) && a.id === parseInt(req.params.id));
     if (!activity) return res.status(404).send('activity not found');
 

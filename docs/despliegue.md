@@ -41,12 +41,12 @@ He creado tres clases:
 - Actividad concreta en cierto día en '/plan/actividades/:dia/:id'
 
 
-#### Modificaciones con PUT
+#### Modificaciones con POST
 
 - Valores del usuario en "/plan/usuario"
 - Valores de cierta actividad en "/plan/actividades/:dia/:id"
 
-#### Nuevos elementos con POST
+#### Nuevos elementos con PUT
 
 - Nueva actividad en "/plan/actividades"
 
