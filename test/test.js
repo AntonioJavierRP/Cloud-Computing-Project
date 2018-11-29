@@ -6,7 +6,7 @@ var request = require('supertest')
 describe("infopages", function(){
     it("shows status ok", function(done){
         request(app).get("/")
-            .expect(400)
+            .expect(200)
             .expect('Content-Type', /json/)
             .expect(/OK/)
             .end(done);

@@ -113,3 +113,5 @@ Para ello tan solo tenemos que:
 * Y por último seleccionamos enable automatic deploys.
 
 No olvidar tambien seleccionar la acción "Wait for CI to pass before deploy", ya que esto hará que no se despliegue a Heroku hasta que se pasen los tests Travis CI.
+
+![Captura Heroku](img/heroku-github.png "Conexion Heroku y Github")
