@@ -64,7 +64,7 @@ Para especificar los tests he usado Supertest y Mocha.
 
 Así mismo, he usado Travis CI para que se ejecuten los tests que he creado cada vez que se haga un push al repositorio master.
 
-Para ello he iniciado sesión en [Travis](https://travis-ci.org/) con mi cuenta de Github para que quede así vinculada y he seleccionado [este](https://github.com/AntonioJavierRP/Cloud-Computing-Project) repositorio para que realize los test que le he especificado en el archivo [.travis.yml](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/.travis.yml)
+Para ello he iniciado sesión en [Travis](https://travis-ci.org/) con mi cuenta de Github para que quede así vinculada y he seleccionado [este](https://github.com/AntonioJavierRP/Cloud-Computing-Project) repositorio para que realize los tests que le he especificado en el archivo [.travis.yml](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/.travis.yml)
 para que, cada vez que el respositorio se modifique, compruebe que funciona todo correctamente.
 
 ## Despliegue en Heroku
@@ -73,10 +73,10 @@ Para realizar el despliegue en Heroku en primer lugar he seguido las instruccion
 
 Los pasos seguidos para el despliegue según este tutorial son:
 1. Instalar Heroku CLI.
-2. Hacer  <span style="color:purple">heroku create</span> desde la terminal dentro de nuestra carpeta local del reposotorio.
+2. Hacer  <span style="color:purple">heroku create</span> desde la terminal dentro de nuestra carpeta local del repositorio.
 3. Hacer <span style="color:purple">git push heroku master</span>.
 
-Tendremos en nuestra carpeta ahora una archivo llamado "Procfile", en este archivo se indica a Heroku los comandos que tiene que ejecutar mi app de Heroku al iniciarse en formato <process type>: <command>, en nuestro caso es:
+Tendremos en nuestra carpeta ahora una archivo llamado "Procfile", en este archivo se indica a Heroku los comandos que tiene que ejecutar mi app de Heroku al iniciarse en formato `<process type>: <command>`, en nuestro caso es:
 
 ~~~~
 web: node index.js
@@ -86,7 +86,7 @@ web: node index.js
 
 "node index.js" es el comando que tiene que ejecutar cada dyno.
 
-Y con esto ya estaría despleguado en Heroku en el enlace con nombre aleatorio que se creó cuando hicimos el segundo paso.
+Y con esto ya estaría desplegado en Heroku en el enlace con nombre aleatorio que se creó cuando hicimos el segundo paso.
 
 Pero así no es como queremos que se realice el despliegue. Queremos poder estar trabajando localmente en nuestro ordenador y que cuando hagamos algún cambio al proyecto y le hagamos push a Github, se realice un despliegue automático a Heroku desde Github una vez se hayan pasado los tests.
 
@@ -107,11 +107,11 @@ Para ello tan solo tenemos que:
 * En nuestra "Dashboard" de Heroku, seleccionamos "Create new app".
 * Elegimos nombre y región.
 * Nos vamos a la pestaña Deploy de nuestra app creada.
-* En Deployment method seleccionamos Github.
+* En "Deployment method" seleccionamos Github.
 * Iniciamos sesión con nuestra cuenta de Github.
 * Seleccionamos el repositorio en el que se encuentra nuestro proyecto.
-* Y por último seleccionamos enable automatic deploys.
+* Y por último seleccionamos "enable automatic deploys".
 
-No olvidar tambien seleccionar la acción "Wait for CI to pass before deploy", ya que esto hará que no se despliegue a Heroku hasta que se pasen los tests Travis CI.
+No olvidar tambien seleccionar la acción "Wait for CI to pass before deploy", ya que esto hará que no se despliegue a Heroku hasta que se pasen nuestros tests de Travis CI.
 
 ![Captura Heroku](img/heroku-github.png "Conexion Heroku y Github")
