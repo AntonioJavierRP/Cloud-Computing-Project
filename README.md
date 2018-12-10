@@ -13,7 +13,14 @@ En este proyecto propongo desarrollar un servicio en la nube en el que se podrá
 
 
 ## Documentación sobre estructura y despliegue:
-https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/despliegue.md
+
+[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito2-despliegue.md)
+
+
+
+## Documentación sobre provisionamiento:
+
+[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito3-provisionamiento.md)
 
 
 ## Cliente potencial
