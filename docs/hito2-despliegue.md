@@ -94,7 +94,7 @@ Para hacer esto en primer lugar hice uso de [Codeship](https://codeship.com/):
 
 Tuve que vincular mi cuenta de github con Codeship, crear un nuevo proyecto en Codeship en el que especifiqué el repositorio de mi proyecto de CC en Github y por último configuré el deployment en Heroku desde Codeship de ese repositorio cada vez que se le haga push, dandole el nombre de nuestra app creada en heroku y nuestra api key como podemos ver en la captura a continuación:
 
-![Captura Codeship](img/codeship_heroku.png "Conexion heroku y codeship")
+![Captura Codeship](img/h2/codeship_heroku.png "Conexion heroku y codeship")
 
 La página del despliegue en codeship es la siguiente: https://schedule-cloud-computing.herokuapp.com/
 
@@ -114,4 +114,4 @@ Para ello tan solo tenemos que:
 
 No olvidar tambien seleccionar la acción "Wait for CI to pass before deploy", ya que esto hará que no se despliegue a Heroku hasta que se pasen nuestros tests de Travis CI.
 
-![Captura Heroku](img/heroku-github.png "Conexion Heroku y Github")
+![Captura Heroku](img/h2/heroku-github.png "Conexion Heroku y Github")
