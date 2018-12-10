@@ -9,6 +9,31 @@ var {Activity,type}= require("./Activity.js");
 
 app.use(express.json());    // Para parsear el json object.
 
+// Para log
+
+const logger = require('./logger.js');
+const morgan = require('morgan');
+
+// Usamos morgan para separar la salida estandar y la de error y añadirlas a los logs.
+app.use(morgan('dev', {
+    skip: function (req,res) {
+        return res.statusCode < 400
+    }, stream: { write:message => logger.warn(message)}
+}));
+
+app.use(morgan('dev', {
+    skip: function (req,res) {
+        return res.statusCode >= 400
+    }, stream: { write:message => logger.info(message)}
+}));
+
+
+//app.use(morgan("combined", { stream: { write:message => logger.info(message)}}));
+// Esto sirve pero estaria bien dividirlo entre salida de error y salida estandar.
+
+
+// Instancias de las estructuras de datos creadas para comprobar el funcionamiento de la api REST.
+
 var usuario = new PerfilUsuario("Antonio Javier");
 var fechaIni = new Date()
 var plan = new Plan(usuario,fechaIni, 60);
@@ -25,6 +50,7 @@ plan.aniadirActividad = act4
 //---------------------------------------------------------------------------------------------
 
 app.get('/', (req,res) => {
+    logger.debug('Accediendo a main page');
     res.send({
         "status":"OK",
         "ejemplo":{"ruta":"/plan/usuario",
@@ -34,6 +60,7 @@ app.get('/', (req,res) => {
 
 // Página con el plan completo
 app.get('/plan', (req,res) => {
+    logger.debug('Accediendo a pagina de plan');
     res.send(plan)
 })
 
@@ -218,8 +245,16 @@ function validateActivity(act){
 
 // PORT
 const port = process.env.PORT || 3000;  // Environment variable PORT (set on terminal, if it doesnt exists it uses 3000)
-app.listen(port, () => console.log(`Listening on port ${port}...`));    // use `` instead of '' so we can use template string $()
+app.listen(port, () => logger.info(`Listening on port ${port}...`));    // use `` instead of '' so we can use template string $()
 
+// Pruebas con logs
+/*
+logger.info('HI');
+logger.debug('debugging info');
+logger.warn('warning message');
+logger.info('Hello world');
+logger.error('error info');
+*/
 
 // para poder testear
 module.exports = app;
