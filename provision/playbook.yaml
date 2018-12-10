@@ -2,7 +2,7 @@
 - hosts: azure
   become: yes
   vars:
-    ruta_proyecto: home/azureuser/Cloud-Computing-Project
+    ruta_proyecto: home/usuario-azure/Cloud-Computing-Project
 
   tasks:
     - name: Hacer update
