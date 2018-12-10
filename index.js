@@ -50,7 +50,6 @@ plan.aniadirActividad = act4
 //---------------------------------------------------------------------------------------------
 
 app.get('/', (req,res) => {
-    logger.debug('Accediendo a main page');
     res.send({
         "status":"OK",
         "ejemplo":{"ruta":"/plan/usuario",
@@ -60,7 +59,6 @@ app.get('/', (req,res) => {
 
 // Página con el plan completo
 app.get('/plan', (req,res) => {
-    logger.debug('Accediendo a pagina de plan');
     res.send(plan)
 })
 

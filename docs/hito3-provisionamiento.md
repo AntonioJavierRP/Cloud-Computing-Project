@@ -29,6 +29,8 @@ Ansible
 
 explicación de la receta.
 
+Todas las peticiones get, put, post y delete que se hagan figurarán en el log y en la terminal (si no cambiamos el atributo "level" asignado a esta)
+
 
 ## 3. Funcionalidad Añadida.
 

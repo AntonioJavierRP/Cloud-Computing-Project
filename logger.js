@@ -5,7 +5,7 @@ const path = require('path');
 const winstonRotator = require('winston-daily-rotate-file')         // Para crear un archivo de log nuevo cada dia.
 
 const env = process.env.NODE_ENV || 'development';
-const logDir = 'log';
+const logDir = './log';
 
 // Creamos el directorio de log si no existe
 if( !fs.existsSync(logDir)){
