@@ -162,24 +162,30 @@ Podemos comprobar que se ha desplegado correctamente, accediendo a la IP de nues
 
 ## 4. Funcionalidad Añadida.
 
-Sistema de log más sofisticado con winston y morgan....
+Se le ha añadido a nuestra aplicación de planificación deportiva un sistema de log más sofisticado haciendo uso de los paquetes de npm: Winston y Morgan.
 
-He añadido un fichero logger.js que usamos el paquete de npm "winston" para especificar un formato de log concreto y que vamos a guardar los logs en un fichero concreto dependiente del dia, en un directorio log que creará en caso de que no exista.
+Gracias a estos, ahora es posible visualizar todas las peticiones get, put, post y delete que se le hagan a nuestra aplicación, con el código de error devuelto, a través de la consola. Además, también se creará automáticamente una carpeta llamada "log" en la que se guardarán ficheros de logs, con todas las alertas, errores, warnings, etc que devuelva nuestra aplicación durante el día, generándose un nuevo fichero al día siguiente.
 
-Todas las peticiones get, put, post y delete que se hagan figurarán en el log y en la terminal (si no cambiamos el atributo "level" asignado a esta)
+Para conseguir esto he añadido un fichero logger.js donde usamos el paquete de npm "Winston" para especificar un formato de log concreto, unos niveles de de los cuales dependerá que mensajes podremos visualizar y la ruta del fichero de logs que se irá generando.(en un directorio log que creará en caso de que no exista).
+
+Además de esto, se ha modificado el archivo index.js en el que usamos Morgan para redireccionar la salida estándar y la salida de error al objeto logger con las características definidas en logger.js
+
+
 
 ## 5. Comprobación de provisionamiento.
 
-Comprobacion provisionamiento de ...:
-para realizar el provisionamiento de mi compañero he creado una nueva maquina virtual con las siguientes especificaciones en azure:
+## Comprobación provisionamiento de [Jesús Mesa González](https://github.com/mesagon):
+
+
+Para realizar el provisionamiento de mi compañero he creado una nueva maquina virtual con las siguientes especificaciones en azure:
 
 captura
 
-A continuacion he descargado su carpeta de provision y he ejecutado su playbook de ansible con ansible-playbook playbook.yaml con el que he obtenido la siguiente salida
+A continuación he descargado su carpeta de provisión y he ejecutado su playbook de ansible con ansible-playbook playbook.yaml.Obteniendo la siguiente salida:
 
 
 captura
 
 
 
-Provisionamiento propio comprobado por ... en ... .
+Provisionamiento propio comprobado por Jesús Mesa González en -> [Enlace](https://github.com/mesagon/Proyecto-CC-MII0).
