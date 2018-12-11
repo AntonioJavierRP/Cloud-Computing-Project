@@ -174,7 +174,7 @@ Además de esto, se ha modificado el archivo index.js en el que usamos Morgan pa
 
 ## 5. Comprobación de provisionamiento.
 
-## Comprobación provisionamiento de [Jesús Mesa González](https://github.com/mesagon):
+### Comprobación provisionamiento de [Jesús Mesa González](https://github.com/mesagon):
 
 
 Para realizar el provisionamiento de mi compañero he creado una nueva maquina virtual con la misma configuración que la especificada en su repositorio.
@@ -192,4 +192,4 @@ Y compruebo en el navegador que se ha desplegado correctamente:
 
 
 
-Provisionamiento propio comprobado por Jesús Mesa González en -> [Enlace](https://github.com/mesagon/Proyecto-CC-MII0).
+Provisionamiento propio comprobado por Jesús Mesa González en -> [Enlace](https://github.com/mesagon/Proyecto-CC-MII/blob/master/docs/hito3/provisionAntonioRodriguez.md).
