@@ -2,7 +2,7 @@
 
 MV: 40.112.54.39
 
-En este hito se ha desplegado nuestro proyecto de planificación deportiva en una máquina virtual en la nube a través de Azure, se ha automatizado el provisionamiento con Ansible y se le ha añadido una funcionalidad a la aplicación.
+En este hito se ha desplegado nuestro proyecto de planificación deportiva en una máquina virtual en la nube creada a través de Azure, se ha automatizado el provisionamiento con Ansible y se le ha añadido una nueva funcionalidad a la aplicación.
 
 ## 1. Sistema remoto usado.
 
@@ -13,7 +13,7 @@ La razón por la cual se ha elegido es porque contamos con dinero en este servic
 
 Para crear la máquina virtual podemos ir a la pestaña de "Todos los servicios" en el portal principal de Azure una vez hayamos iniciado sesión en nuestra cuenta.
 
-Seleccionamos maquinas virtuales y crear una nueva.
+Seleccionamos maquinas virtuales y crear una nueva (agregar).
 Una vez llegados a este punto, tendremos que rellenar los datos básicos sobre la infraestructura que queremos que tenga nuestra máquina virtual tal y como podemos observar en la siguiente captura:
 
 ![Crear MV azure](img/h3/crear-mv-azure.png "Pagina principal de creación de MV en Azure")
@@ -22,30 +22,46 @@ Una vez llegados a este punto, tendremos que rellenar los datos básicos sobre l
 En la columna izquierda se listan las máquinas virtuales ya existentes. En mi caso ya tengo una llamada "Azure" con la cual he realizado las pruebas necesarias para realizar el provisionamiento.
 La máquina virtual que estamos creando en las capturas de pantalla es en la que hemos desplegado definitivamente nuestro proyecto.
 
-## 2. Infraestructura usada.
+## 2. Infraestructura usada. 
 
-Como se puede apreciar en la captura anterior la máquina virtual se llamará "azure-mv", su región será Este de Estados Unidos, debido a que es la región que ofrece el mejor precio en las opciones de tamaño (CPU y memoria).
 
-Como sistema operativo se ha escogido Ubuntu Server 18.04 LTS, server ya que no nos hace falta GUI requeriría mas recursos de memoria y CPU, además me he decantado por Ubuntu Server por que ya cuento con experiencia previa con este sistema, ademas de que entre las distribuciones Linux, Debian y Ubuntu, cuentan con mas paquetes básicos que por ejemplo CentOS.
-Ubuntu es el más popular y por tanto cuante con mejor soporte online y de proveedores de servidores virtuales.
+Como se puede apreciar en la captura anterior la máquina virtual se llamará "azure-mv" y su región será "Este de Estados Unidos", debido a que es la región que ofrece el menor precio en las opciones de tamaño (CPU y memoria).
+
+### 2.1 Sistema operativo. 
+Como sistema operativo, para nuestra máquina virtual, se ha escogido Ubuntu Server 18.04 LTS. 
+
+En primer lugar una de las razones por las que he escogido Ubuntu Server es porque tengo experiencia previa con este sistema.
+
+Por otra parte se ha escogido la distribución Server en lugar de la Desktop debido a que no necesitaremos un GUI para la ejecución de nuestra aplicación ni los paquetes extra que trae la distribución Desktop de Ubuntu.
+
+Ademas de esto, de entre las distribuciones Linux más usadas, Debian y Ubuntu cuentan con mas paquetes básicos que por ejemplo CentOS.
+Ubuntu además es el más popular y por tanto cuenta con mejor soporte online y soporte de proveedores de servidores virtuales.
+
 Por último, al tratarse de una Long Termn Support (LTS) Version es más estable y tiene 5 años de soporte (frente a los 3 años de soporte de Debian).
 He escogido la versión 18 ya que es la más reciente.
 
+### 2.2 Memoria y CPU.
 
-Por otra parte, en lo referido a la CPU y memoria, azure cuenta con un amplio abanico de opciones llamadas "series" con diferentes precios, que pueden variar en función a la región que se haya especificado. Por ejemplo en las dos capturas siguientes muestro los precios ordenados de más barato a más caro de los planes disponibles para el oeste de Europa y el esta de estados unidos respectivamente:
+Por otra parte, en lo referido a la CPU y memoria, Azure dispone de un amplio abanico de opciones llamadas "series" con diferentes precios que varían en función a la región que se haya especificado y de los recursos de memoria y GPU que ofrecen.
+
+ Por ejemplo en las dos capturas siguientes muestro los precios ordenados de más barato a más caro de los tamaños disponibles para el oeste de Europa y el este de Estados Unidos respectivamente:
 
 ![ratios euw](img/h3/ratios-euw.png "Precios planes en oeste Europa")
 
 ![ratios nae](img/h3/ratios-USA.png "Precios planes en este USA")
 
-Como se puede apreciar y como ya mencioné anteriormente, la región "Este de EE.UU" es la que ofrece los precios más bajos y por esta razón por la que la he escogido. El tamaño B1s es el más barato y, cuenta con 1 CPU y 1 GB de ram aunque también nos habría bastado con el tamaño A0 Básico, pero al costar más y ofrecer menos, nos terminamos decantando por el B1s Estándar.
+Como se puede apreciar y como ya mencioné anteriormente, la región "Este de EE.UU" es la que ofrece los precios más bajos y por esta razón se ha escogido. El tamaño B1s es el más barato y cuenta con 1 CPU y 1 GB de ram aunque también nos habría bastado con el tamaño A0 Básico, pero al costar más y ofrecer menos, nos terminamos decantando por el B1s Estándar.
 
-Por ultimo en lo referente a al almacenamiento requierdo usaremos lo minimo ofrecido: 30gb y SSD premium, ya que tensmos mejores velocidades y no requiere un pago superior que el HDD.
+### 2.3 Almacenamiento.
+
+
+Por ultimo en lo referente a almacenamiento requerido usaremos lo mínimo ofrecido: 30GB. El disco será SSD premium, ya que ofrece mejores velocidades y no requiere un pago superior que el HDD, aunque podríamos perfectamente usar el HDD para nuestra aplicación.
 
 ![SSD](img/h3/tamaño-disco.png "Tamaño disco")
 
 
 ## 2.1 Configuración del resto de opciones y puertos.
+
 
 A continuación, especificamos el nombre de usuario de la máquina virtual, que en nuestro caso será "usuario-azure" y nos autentificaremos usando nuestra clave pública SSH (que es la que tenemos en ~/.ssh/id_rsa.pub).
 
