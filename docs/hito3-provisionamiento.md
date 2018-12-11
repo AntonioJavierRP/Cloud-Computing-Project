@@ -177,14 +177,18 @@ Además de esto, se ha modificado el archivo index.js en el que usamos Morgan pa
 ## Comprobación provisionamiento de [Jesús Mesa González](https://github.com/mesagon):
 
 
-Para realizar el provisionamiento de mi compañero he creado una nueva maquina virtual con las siguientes especificaciones en azure:
+Para realizar el provisionamiento de mi compañero he creado una nueva maquina virtual con la misma configuración que la especificada en su repositorio.
 
-captura
-
-A continuación he descargado su carpeta de provisión y he ejecutado su playbook de ansible con ansible-playbook playbook.yaml.Obteniendo la siguiente salida:
+A continuación he descargado su carpeta de provisión, he modificado la IP en de su archivo de hosts a la de la maquina virtual que acabo de crear y he ejecutado su playbook de ansible con ansible-playbook playbook.yaml.Obteniendo la siguiente salida:
 
 
-captura
+![comprobación Jesús](img/h3/comprobacion-jesus.png "Ejecución playbook de Jesús Mesa González")
+
+
+Y compruebo en el navegador que se ha desplegado correctamente:
+
+
+![comprobación Jesús 2](img/h3/comprobacion-jesus1.png "Comprobación en el navegador")
 
 
 
