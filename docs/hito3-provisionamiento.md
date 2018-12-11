@@ -75,16 +75,34 @@ Una vez creada la maquina virtual, es importante que cambiemos en la configuraci
 ![estatica](img/h3/ip-estatica.png "Configuración IP")
 
 
-## 3. Sistema de provisionamiento.
+## 3. Provisionamiento.
 
-He usado ansible, por su simplicidad.
+Para gestionar de forma remota la máquina virtual creada he usado Ansible. Ansible es una herramienta open source que hace posible configurar el aprovisionamiento y despliegue automático de aplicaciones de forma sencilla.
+Para ello hemos usado un archivo "receta" llamado playbook en el que se especifica la configuración que queremos que tenga nuestro sistema.
 
-para la configuracion de ansible necesitaremos 3 ficheros:
+Hemos nombrado al archivo [playbook.yaml](enlacerepositorio) y se encuentra en el directorio "provision" de nuestro repositorio. En el siguiente apartado lo describiré en mayor profundidad.
+
+Además del playbook, hemos incluido otros dos archivos en los que especificamos nuestra configuración de Ansible:
 - ansible.cfg: 
-    especificamos donde esta el archivo de inventario...
-    especificamos que no se checkee la host key cada vez que se establezca la conexion.
-- ansible.hosts:
-    en nuestro caso
+    
+    Ansible trae su propio fichero de configuración básica, pero con este especificamos detalles extra de configuración.
+    
+    Tan solo contiene lo siguiente:
+
+~~~~
+[defaults]
+host_key_checking = False
+inventory = ./ansible_hosts
+~~~~
+
+La primera opción evita que ssh haga la comprobación de Host key para evitarnos problemas con el cambio de MAC a la hora de establecer conexión.
+
+La segunda especifica donde va a estar el fichero de hosts.
+
+
+- ansible_hosts:
+    
+    En este fichero especificamos la máquina a la que vamos a acceder, detallando el puerto por el que vamos a acceder, dónde se encuentra nuestra clave ssh para el acceso y la IP de nuestra máquina:
 ~~~~
 [azure]
 azure_mv ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/id_rsa.pub ansible_ssh_host=40.112.54.39
@@ -93,54 +111,52 @@ azure_mv ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/id_rsa.pub ansi
 ansible_ssh_user=usuario-azure
 ~~~~
 
-especificamos el puerto para ssh
-donde esta la clave publica para establecer la conexion y la ip de la maquna virtual
-y el nombre de usuario
+### 3.1 Playbook.yaml.
 
-- playbook.yaml
+En este archivo especificamos en formato YAML lo que se tiene que instalar y ejecutar para desplegar nuestra aplicación en la máquina virtual.
 
-receta creada en el directorio provision en el archivo [playbook.yaml](enlace repositorio)
+A continuación describo la estructura de mi propio playbook:
 
-Esta receta será como una especie de script que ejecutaŕa la maquina virtual cuando hagamos la llamada
+* En primer lugar especificamos en hosts las maquinas virtuales (de las definidas en ansible_hosts) que ejecutarán las acciones especificadas.
+
+* Con become: yes, especificamos que se ejecute todo como super usuario.
+
+* Definimos una variable llamada ruta_proyecto. que es una ruta donde más tarde situaremos nuestro repositorio del proyecto de github y a la que recurriremos repetidas veces a la hora de definir las tareas.
+
+* A continuación especificamos las tareas que se tienen que realizar con "tasks" (el estado que tiene que alcanzar la maquina virtual).
+
+* La primera acción consiste en hacer un update para asegurarnos de que se instala la ultima version de los paquetes que más tarde especificamos.
+
+* Con la segunda acción instalamos git si no esta ya instalado.
+
+* La tercera acción descarga el repositorio de nuestro proyecto de Github en la ruta que habíamos especificado como variable.
+
+* Instalamos o nos aseguramos de que estén instalados node y npm con la cuartas y quinta acciones.
+
+* Actualizamos npm en la ruta definida, para que se instalen todos los paquetes que requiere nuestro proyecto.
+
+* Instalamos pm2 para poder ejecutar nuestro proyecto y que se quede en segundo plano para que Ansible no se quede en constante ejecución (que es lo que pasaría si lo ejecutásemos directamente con "node index.js").
+
+* Usamos pm2 para poder eliminar el antiguo proceso ya lanzado, lo cual nos devolverá error en la primera ejecución (ya que no existirá ninguno), por esta razón usamos "ignore_errors:yes".
+
+* Redireccionamos el puerto 3000 al 80.
+
+* Y terminamos lanzando el proceso con pm2.
+
+Para que ansible haga uso de este playbook en nuestra máquina virtual tan sólo tendremos que ejecutar la siguiente orden:
 
 ~~~~
 ansible-playbook playbook.yaml
 ~~~~
 
-con la diferencia de que nos servirá independientemente de los paquetes ya instalados en la maquina virtual.
 
-### 3.1 Explicacion playbook.
-
-En primer lugar especificamos en host la maquina virtual que ejecutará todas las acciones especificadas.
-Con become: yes, especificamos que se ejecute todo como superusuario.
-
-Definimos una variable llamada ruta_proyecto. que es una ruta donde más tarde situaremos nuestro repositorio del proyecto de github
-
-A continuación especificamos las tasks.
-
-en primer lugar hacemos un update para asegurarnos de que se instala la ultima version de los paquetes que especificamos.
-
-A continuacion instalamos git si no esta ya instalado.
-
-despues descargamos el repositorio de nuestro proyecto en la ruta que especificamos.
-
-Nos aseguramos de que este instalado node y npm
-
-Actualizamos npm en la ruta para que se instalen todos los paquetes que requiere nuestro proyecto.
-
-Instalamos pm2 para poder ejecutar nuestro proyecto y que se quede en segundo plano para que ansible no se quede en constante ejectucion que es lo que pasaría si lo ejecutásemos con node.
-
-Ademas usaremos pm2 para poder eliminar el antiguo proceso ya lanzado, lo cual nos devolverá error en la primera ejecucion, por esta razon usamos, ignore_errores:yes.
-
-Y por ultimo redirecciono el puerto 3000 al 80 y lanzo el proceso.
-
-La ejecución de este playbook en nuestra maquina virtual con ansible nos da la siguiente salida:
+Esto nos da la siguiente salida:
 
 ![playbook](img/h3/ejecucion-playbook.png "Ejecución del playbook")
 
 Todo se ha ejecutado correctamente.
 
-Podemos comprobar que se ha desplegado correctamente, accediendo a la IP desde nuestro navegador:
+Podemos comprobar que se ha desplegado correctamente, accediendo a la IP de nuestra MV desde nuestro navegador:
 
 ![prueba navegador](img/h3/comprobacion-navegador.png "Comprobación del despliegue en el navegador")
 

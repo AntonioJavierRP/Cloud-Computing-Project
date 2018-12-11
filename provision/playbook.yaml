@@ -7,6 +7,7 @@
   tasks:
     - name: Hacer update
       shell: apt update
+      
     - name: Instala git
       apt: 
         pkg: git 
