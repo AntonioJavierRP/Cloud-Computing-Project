@@ -37,7 +37,7 @@ Por otra parte se ha escogido la distribución Server en lugar de la Desktop deb
 Ademas de esto, de entre las distribuciones Linux más usadas, Debian y Ubuntu cuentan con mas paquetes básicos que por ejemplo CentOS.
 Ubuntu además es el más popular y por tanto cuenta con mejor soporte online y soporte de proveedores de servidores virtuales.
 
-Por último, al tratarse de una Long Termn Support (LTS) Version es más estable y tiene 5 años de soporte (frente a los 3 años de soporte de Debian).
+Por último, al tratarse de una Long Term Support (LTS) Version es más estable y tiene 5 años de soporte (frente a los 3 años de soporte de Debian).
 He escogido la versión 18 ya que es la más reciente.
 
 ### 2.2 Memoria y CPU.
@@ -179,7 +179,7 @@ Además de esto, se ha modificado el archivo index.js en el que usamos Morgan pa
 
 Para realizar el provisionamiento de mi compañero he creado una nueva maquina virtual con la misma configuración que la especificada en su repositorio.
 
-A continuación he descargado su carpeta de provisión, he modificado la IP en de su archivo de hosts a la de la maquina virtual que acabo de crear y he ejecutado su playbook de ansible con ansible-playbook playbook.yaml.Obteniendo la siguiente salida:
+A continuación he descargado su carpeta de provisión, he modificado la IP en de su archivo de hosts a la de la maquina virtual que acabo de crear y he ejecutado su playbook de ansible con ansible-playbook playbook.yml. Obteniendo la siguiente salida:
 
 
 ![comprobación Jesús](img/h3/comprobacion-jesus.png "Ejecución playbook de Jesús Mesa González")
@@ -192,4 +192,4 @@ Y compruebo en el navegador que se ha desplegado correctamente:
 
 
 
-Provisionamiento propio comprobado por Jesús Mesa González en -> [Enlace](https://github.com/mesagon/Proyecto-CC-MII/blob/master/docs/hito3/provisionAntonioRodriguez.md).
+Mi provisionamiento ha sido comprobado por Jesús Mesa González en -> [Enlace](https://github.com/mesagon/Proyecto-CC-MII/blob/master/docs/hito3/provisionAntonioRodriguez.md).
