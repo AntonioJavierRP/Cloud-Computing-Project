@@ -60,17 +60,17 @@ Por ultimo en lo referente a almacenamiento requerido usaremos lo mínimo ofreci
 ![SSD](img/h3/tamaño-disco.png "Tamaño disco")
 
 
-## 2.1 Configuración del resto de opciones y puertos.
+### 2.4 Configuración del resto de opciones y puertos.
 
 
-A continuación, especificamos el nombre de usuario de la máquina virtual, que en nuestro caso será "usuario-azure" y nos autentificaremos usando nuestra clave pública SSH (que es la que tenemos en ~/.ssh/id_rsa.pub).
+A continuación, para continuar con la creación de la máquina virtual, especificamos el nombre de usuario de la máquina virtual, que en nuestro caso será "usuario-azure" y nos autentificaremos usando nuestra clave pública SSH (que es la que tenemos en ~/.ssh/id_rsa.pub).
 
-Para terminar, añadiremos las siguientes dos reglas de puertos publicos de entrada para que se pueda acceder a la ip por SSH y con el navegador por el puerto 80.
+Para terminar, en el apartado de "REGLAS DE PUERTO DE ENTRADA" elegiremos "Permitir los puertos seleccionados" y seleccionaremos los puertos de entrada SHH y HTTP para que se pueda acceder a la ip por SSH y con el navegador por el puerto 80:
 
 ![puertos](img/h3/reglas-puertos.png "Reglas de puerto de entrada")
 
 
-Una vez creada la maquina virtual, es importante que cambiemos en las opciones de IP de dinamica a estática, para que no se genere una nueva cada vez que la reiniciamos.
+Una vez creada la maquina virtual, es importante que cambiemos en la configuración de la IP de nuestra máquina virtual, que se haga una asignación estática de forma que no se genere una nueva IP cada vez que reiniciamos la MV:
 
 ![estatica](img/h3/ip-estatica.png "Configuración IP")
 
