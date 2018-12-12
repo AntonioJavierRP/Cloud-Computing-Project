@@ -20,7 +20,9 @@ En este proyecto propongo desarrollar un servicio en la nube en el que se podrá
 
 ## Documentación sobre provisionamiento:
 
-[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito3-provisionamiento.md)
+MV: 40.112.54.39
+
+[Enlace con información detallada sobre el provisionamiento](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito3-provisionamiento.md)
 
 
 ## Cliente potencial
