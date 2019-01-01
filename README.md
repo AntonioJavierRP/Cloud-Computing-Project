@@ -14,15 +14,14 @@ En este proyecto propongo desarrollar un servicio en la nube en el que se podrá
 
 ## Documentación sobre estructura y despliegue:
 
-[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito2-despliegue.md)
-
+Los detalles sobre las estructuras de clases y datos de la aplicación, las peticiones posibles que se le puede hacer a la API REST creada y sobre cómo se ha realizado un despliegue automático de la aplicación en Heroku se encuentran en [este enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito2-despliegue.md).
 
 
 ## Documentación sobre provisionamiento:
 
 MV: 40.112.54.39
 
-[Enlace con información detallada sobre el provisionamiento](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito3-provisionamiento.md)
+[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito3-provisionamiento.md) con información detallada sobre la creación de una máquina virtual en la nube con Azure y su posterior provisionamiento con Ansible.
 
 
 ## Cliente potencial
@@ -37,7 +36,7 @@ Podemos listar los siguientes servicios:
 
 - Servicio de almacén de los datos del usuario, su plan y sus días de entrenamiento. Para esto usaré una base de datos NoSQL MongoDB.
 - Módulo de procesado de la información que ha especificado el usuario sobre su entrenamiento teniendo en cuenta sus preferencias y combinándolo con los datos referentes al tiempo atmosférico.
-- Servicio de LOG para monitorización de la aplicación.
+- Servicio de Log para monitorización de la aplicación.
 
 
 Así mismo, existirá un microservicio del que obtendremos los datos meteorológicos de los próximos 15 días, pero este no lo desarrollaremos nosotros sino que utilizaremos el del proyecto de una compañera.

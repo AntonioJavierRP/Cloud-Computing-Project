@@ -166,7 +166,7 @@ Se le ha añadido a nuestra aplicación de planificación deportiva un sistema d
 
 Gracias a estos, ahora es posible visualizar todas las peticiones get, put, post y delete que se le hagan a nuestra aplicación, con el código de error devuelto, a través de la consola. Además, también se creará automáticamente una carpeta llamada "log" en la que se guardarán ficheros de logs, con todas las alertas, errores, warnings, etc que devuelva nuestra aplicación durante el día, generándose un nuevo fichero al día siguiente.
 
-Para conseguir esto he añadido un fichero logger.js donde usamos el paquete de npm "Winston" para especificar un formato de log concreto, unos niveles de de los cuales dependerá que mensajes podremos visualizar y la ruta del fichero de logs que se irá generando.(en un directorio log que creará en caso de que no exista).
+Para conseguir esto he añadido un fichero logger.js donde usamos el paquete de npm "Winston" para especificar un formato de log concreto, especificamos unos niveles de de los cuales dependerá qué mensajes podremos visualizar y también especificaremos la ruta del fichero de logs que se irá generando.(en un directorio log que creará en caso de que no exista).
 
 Además de esto, se ha modificado el archivo index.js en el que usamos Morgan para redireccionar la salida estándar y la salida de error al objeto logger con las características definidas en logger.js
 
