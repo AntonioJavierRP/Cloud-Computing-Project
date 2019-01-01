@@ -43,9 +43,6 @@ Podemos listar los siguientes servicios:
 Así mismo, existirá un microservicio del que obtendremos los datos meteorológicos de los próximos 15 días, pero este no lo desarrollaremos nosotros sino que utilizaremos el del proyecto de una compañera.
 
 
-## Hitos del proyecto
-[Enlace a los hitos del proyecto](https://github.com/AntonioJavierRP/Cloud-Computing-Project/milestones).
-
 
 ## Licencia
 GNU General Public License v3.0.
