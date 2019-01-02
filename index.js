@@ -56,7 +56,7 @@ plan.aniadirActividad = act4
 // Instancias de tiempo atmosférico de los proximos dias para comprobar que se aplican las restricciones necesarias
 var tatm1 = new TiempoAtm(23, 18, wtype.Sunny)
 var tatm2 = new TiempoAtm(20, 15, wtype.Cloudy)
-var tatm3 = new TiempoAtm(15, 10, wtype.Rainy)
+var tatm3 = new TiempoAtm(15, 10, wtype.Cloudy)
 var tatm4 = new TiempoAtm(5, 2, wtype.Hail)
 var tatm5 = new TiempoAtm(-3, -8, wtype.Snowy)
 var tatm6 = new TiempoAtm(10, 1, wtype.Cloudy)
@@ -147,7 +147,7 @@ app.get('/plan/actividades/:dia/:id', (req,res) =>{
 
 
 
-// Añadir actividad
+
 
 /*
 Plantilla para postman para comprobar rapido put y post de actividades:
@@ -159,12 +159,26 @@ Plantilla para postman para comprobar rapido put y post de actividades:
 }
 */
 
+// Añadir actividad
+
 app.put('/plan/actividades', (req,res) =>{
     const {error} = validateActivity(req.body);
+    var data_error = null;
+
+    if(req.body.dia <= tiempoAtmosferico.length && req.body.exterior){    // Si está dentro de los días en los que tenemos datos y se realiza fuera.
+        data_error =  validateActivityWithData(req.body);
+
+    }
 
     if(error){
         // 400 bad request
         res.status(400).send(error.details[0].message);
+        return;
+    }
+
+    if(data_error){
+        // 400 bad request
+        res.status(400).send(data_error);
         return;
     }
 
@@ -192,9 +206,22 @@ app.post('/plan/actividades/:dia/:id', (req,res) =>{
 
     const {error} = validateActivity(req.body);
 
+    var data_error = null;
+
+    if(req.body.dia <= tiempoAtmosferico.length && req.body.exterior){    // Si está dentro de los días en los que tenemos datos y se realiza fuera.
+        data_error =  validateActivityWithData(req.body);
+
+    }
+
     if(error){
         // 400 bad request
         res.status(400).send(error.details[0].message);
+        return;
+    }
+
+    if(data_error){
+        // 400 bad request
+        res.status(400).send(data_error);
         return;
     }
 
@@ -268,9 +295,34 @@ function validateActivity(act){
         descripcion: Joi.string().optional(),
         duracion: Joi.number().greater(0).required(),
         horaInicio: Joi.string().length(5).optional(),
-        exterior: Joi.boolean().optional()
+        exterior: Joi.boolean().required()
     };
     return Joi.validate(act, schema);
+}
+
+function validateActivityWithData(act){
+
+    var error = "";
+
+    if (parseInt(act.horaInicio,10) > 6 && parseInt(act.horaInicio) < 20 ){  // En caso de que sea de día
+        if(tiempoAtmosferico[act.dia-1].temperaturaDia < usuario.tempMinima)
+            error = "\nLa temperatura mínima del usuario es inferior a la de la temperatura esperada a la hora especificada"
+    }   
+    else{
+        if(tiempoAtmosferico[act.dia-1].temperaturaNoche < usuario.tempMinima)
+            error = "\nLa temperatura mínima del usuario es inferior a la de la temperatura esperada a la hora especificada"
+    }
+
+    if(usuario.likesRain){
+        if(tiempoAtmosferico[act.dia-1].tiempo == wtype.Hail || tiempoAtmosferico[act.dia-1].tiempo == wtype.Snowy)
+            error += "\nLas condiciones meteorologicas el día especificado no son las apropiadas para realizar la actividad"
+    }
+    else{
+        if(tiempoAtmosferico[act.dia-1].tiempo == wtype.Rainy || tiempoAtmosferico[act.dia-1].tiempo == wtype.Hail || tiempoAtmosferico[act.dia-1].tiempo == wtype.Snowy)
+            error += "\nLas condiciones meteorologicas el día especificado no son las apropiadas para realizar la actividad"
+    }
+
+    return error;
 }
 
 
