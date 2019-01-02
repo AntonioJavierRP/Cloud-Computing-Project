@@ -73,7 +73,8 @@ describe("Manage Activities", function(){
                 "dia": 3,
                 "tipo": "cycling",
                 "duracion": 6,
-                "horaInicio": "15:00"
+                "horaInicio": "15:00",
+                "exterior":true
             })
             .expect(200)
             .end(done);
@@ -110,7 +111,8 @@ describe("Manage Activities", function(){
                 "dia": 3,
                 "tipo": "running",
                 "duracion": 2,
-                "horaInicio": "10:30"
+                "horaInicio": "10:30",
+                "exterior":true
             })
             .expect(200)
             .expect('Content-Type', /json/)

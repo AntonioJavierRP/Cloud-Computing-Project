@@ -155,7 +155,8 @@ Plantilla para postman para comprobar rapido put y post de actividades:
     "dia": 3,
     "tipo": "cycling",
     "duracion": 6,
-    "horaInicio": "15:00"
+    "horaInicio": "15:00",
+    "exterior": true
 }
 */
 
