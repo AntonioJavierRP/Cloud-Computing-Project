@@ -6,6 +6,7 @@ const app = express();
 var PerfilUsuario = require("./PerfilUsuario.js");
 const Plan = require("./Plan.js");
 var {Activity,type}= require("./Activity.js");
+var {TiempoAtm,wtype} = require("./TiempoAtm.js")
 
 app.use(express.json());    // Para parsear el json object.
 
@@ -37,6 +38,8 @@ app.use(morgan('dev', {
 var usuario = new PerfilUsuario("Antonio Javier");
 var fechaIni = new Date()
 var plan = new Plan(usuario,fechaIni, 60);
+var tiempoAtmosferico = []
+
 
 // Actividades de prueba creadas para comprobaciones de cada uno de los comandos http----------
 var act1 = new Activity(1,1,type.Hiking, "", 1,"20:00",true)
@@ -47,6 +50,27 @@ plan.aniadirActividad = act1
 plan.aniadirActividad = act2
 plan.aniadirActividad = act3
 plan.aniadirActividad = act4
+
+
+
+// Instancias de tiempo atmosférico de los proximos dias para comprobar que se aplican las restricciones necesarias
+var tatm1 = new TiempoAtm(23, 18, wtype.Sunny)
+var tatm2 = new TiempoAtm(20, 15, wtype.Cloudy)
+var tatm3 = new TiempoAtm(15, 10, wtype.Rainy)
+var tatm4 = new TiempoAtm(5, 2, wtype.Hail)
+var tatm5 = new TiempoAtm(-3, -8, wtype.Snowy)
+var tatm6 = new TiempoAtm(10, 1, wtype.Cloudy)
+var tatm7 = new TiempoAtm(19, 14, wtype.Sunny)
+
+tiempoAtmosferico.push(tatm1)
+tiempoAtmosferico.push(tatm2)
+tiempoAtmosferico.push(tatm3)
+tiempoAtmosferico.push(tatm4)
+tiempoAtmosferico.push(tatm5)
+tiempoAtmosferico.push(tatm6)
+tiempoAtmosferico.push(tatm7)
+
+
 //---------------------------------------------------------------------------------------------
 
 app.get('/', (req,res) => {
@@ -87,7 +111,7 @@ app.post('/plan/usuario', (req,res) => {
 
     if(error){
         // 400 bad request
-        res.status(400).send(error.detduracionPlanils[0].message);
+        res.status(400).send(error.details[0].message);
         return;
     }
 
@@ -219,6 +243,15 @@ function validatePlan(myplan){         // No lo usamos todavía
     return Joi.validate(myplan, schema);
 }
 
+function validateWheather(myWheather){         // No lo usamos todavía tampoco, cuando no estemos usando nuestros propios datos lo usaremos....
+    const schema = {
+        temperaturaDia: Joi.number().required(),
+        temperaturaNoche: Joi.number().required(),
+        tiempo: Joi.string().valid([wtype.Sunny, wtype.Cloudy, wtype.Rainy, wtype.Hail, wtype.Snowy]).required(),
+    };
+    return Joi.validate(myWheather, schema);
+}
+
 function validateUser(user){
     const schema = {
         nombre: Joi.string().min(3).required(),
@@ -230,7 +263,7 @@ function validateUser(user){
 
 function validateActivity(act){
     const schema = {
-        dia: Joi.number().greater(0).required(),
+        dia: Joi.number().greater(0).less(plan.duracionPlan+1).required(),
         tipo: Joi.string().valid([type.Cycling, type.Hiking, type.Running, type.StrengthTraining, type.Swimming, type.TeamSport]).required(),
         descripcion: Joi.string().optional(),
         duracion: Joi.number().greater(0).required(),

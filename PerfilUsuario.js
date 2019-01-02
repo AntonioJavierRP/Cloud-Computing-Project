@@ -5,7 +5,7 @@ class PerfilUsuario{
     
     constructor(nombre){
         this.nombre = nombre;
-        this.tempMinima = 19;
+        this.tempMinima = 15;
         this.likesRain = false;
 
     }

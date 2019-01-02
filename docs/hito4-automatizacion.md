@@ -25,8 +25,8 @@ En primer lugar vamos a decidirnos por una región.
 
 Tal y como explican en su [página oficial](https://azure.microsoft.com/en-us/global-infrastructure/regions/) Azure es el proveedor de servicios en la Nube que cuenta con más regiones globales, por lo que tenemos una gran cantidad de opciones de las que elegir.
 
-Lo primero que tenemos que considerar a la hora de elegir una región en la que se desplegará la MV es de donde son la mayoría de los usuarios de nuestra aplicación, ya que de nada sirve que nosotros tengamos un acceso rápido al sistema si nuestros usuarios principales tienen una latencia que hace imposible que usen el sistema de forma eficaz. 
-Estimo que la mayoría de los usuarios de la aplicación estarán en España ya que ésta se encuentra en español, por lo que consideraré que mi latencia será aproximadamente la misma que la de estos usuarios. 
+Lo primero que se tendría que considerar a la hora de elegir una región en la que se desplegará la MV es de donde son la mayoría de los usuarios de nuestra aplicación, ya que de nada sirve que nosotros tengamos un acceso rápido al sistema si nuestros usuarios principales tienen una latencia que hace imposible que usen el sistema de forma eficaz. 
+De todas formas para nuestro caso consideramos que la mayoría de los usuarios de la aplicación estarán en España, y consideraré que mi latencia será similar a la de éstos usuarios.
 
 Para determinar mi latencia en cada una de las regiones ofrecidas usaré la página de [Azure Speed Test 2.0](http://azurespeedtest.azurewebsites.net/) recomendad en la guía:
 https://www.appliedi.net/blog/which-azure-region-is-the-best/
@@ -271,6 +271,11 @@ Para visualizar los tamaños disponibles usaremos:
 
 el B1s ya que es el que usamos en la máquina virtual del hito anterior y sabemos que funciona correctamente.
 
+comparar usando 3 tamaños diferentes con ab y si no cambian los resultados usar el B1s por barato o el A1 por mínimo necesario.
+Puedo hacerlo también con el tiempo de ejecucion de los tests.
+
+
+
 ## Script.
 
 
@@ -281,7 +286,7 @@ el B1s ya que es el que usamos en la máquina virtual del hito anterior y sabemo
 
 El avance que se ha hecho con la aplicación durante este hito ha sido la adaptación de las estructuras de clases creadas para que se ajusten en base a los datos climatológicos y se devuelva error en caso de que no se cumplan los requisitos en base a las actividades definidas y a las caraterísticas del usuario.
 
-Para esto he creado una nueva clase TiempoMeteo que contiene los datos climatológicos de los próximos días y tiene los siguientes atributos:
+Para esto he creado una nueva clase TiempoAtm que contiene los datos climatológicos de cuerto día y consta de los siguientes atributos:
 
 * adal
 * adasdasda
