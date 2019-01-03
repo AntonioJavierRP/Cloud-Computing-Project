@@ -27,7 +27,7 @@ MV: 40.112.54.39
 
 MV2: 51.141.3.42
 
-[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito4-automatizacion.md) con información detallada sobre la creación automática de Máquinas Virtuales en Azure mediante línea de órdenes.
+[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito4-automatizacion.md#hito-4-automatizaci%C3%B3n-de-la-creaci%C3%B3n-de-m%C3%A1quinas-virtuales-desde-l%C3%ADnea-de-%C3%B3rdenes) con información detallada sobre la creación automática de Máquinas Virtuales en Azure mediante línea de órdenes.
 
 
 ## Cliente potencial

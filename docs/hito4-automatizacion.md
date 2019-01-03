@@ -5,16 +5,18 @@ MV2: 51.141.3.42
 
 ## 1. Introducción.
 
-En este hito nos hemos centrado en aprender a crear máquinas virtuales en la nube desde la línea de órdenes para poder realizar su provisionamiento de forma más rápida y másiva. Además de esto, he realizado diversas pruebas y benchmarks para elegir la imagen, la región y el tamaño óptimos de la máquina virtual que tenemos que crear. Por último, también se ha añadido una funcionalidad más a la aplicación, que detallo en mayor profundidad en el [último apartado]() de este archivo.
+En este hito nos hemos centrado en aprender a crear máquinas virtuales en la nube desde la línea de órdenes para poder realizar su provisionamiento de forma más rápida y masiva. Además de esto, he realizado diversas pruebas y benchmarks para elegir la imagen, la región y el tamaño óptimos de la máquina virtual que tenemos que crear. Por último, también se ha añadido una funcionalidad más a la aplicación, que detallo en mayor profundidad en el [último apartado](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito4-automatizacion.md#funcionalidad-a%C3%B1adida) de este archivo.
 
 
 ## 2. Cliente Elegido
 
-He elegido Azure Cli 2.0 porque ya hemos estado trabajando con Azure en hitos anteriores y contamos con créditos en esta plataforma. Ademas de que es una de las mas utilizadas y cuenta con un amplio abanico de opciones de región, imágenes preparadas y planes de tamaño de máquina.
+He elegido Azure Cli 2.0 porque ya hemos estado trabajando con Azure en hitos anteriores y contamos con créditos en esta plataforma. Además de que es una de las más utilizadas y cuenta con un amplio abanico de opciones de región, imágenes preparadas y planes de tamaño de máquina.
 
 Para crear una máquina virtual con la linea de ordenes usando Azure Cli 2.0 en primer lugar lo instalamos con apt con: 
 
-        $ sudo apt-get install azure-cli
+~~~~
+$ sudo apt-get install azure-cli
+~~~~
 
 Una vez instalado iniciamos sesión con azure login y estaremos listos para usar Azure Cli.
 
@@ -26,7 +28,7 @@ En primer lugar vamos a decidirnos por una región.
 
 ## 3. Región
 
-Tal y como explican en su [página oficial](https://azure.microsoft.com/en-us/global-infrastructure/regions/) Azure es el proveedor de servicios en la Nube que cuenta con más regiones globales, por lo que tenemos una gran cantidad de opciones de las que elegir.
+Tal y como explican en su [página oficial](https://azure.microsoft.com/en-us/global-infrastructure/regions/), Azure es el proveedor de servicios en la Nube que cuenta con más regiones globales, por lo que tenemos una gran cantidad de opciones de las que elegir.
 
 Lo primero que se tendría que considerar a la hora de elegir una región en la que se desplegará la MV es de dónde son la mayoría de los usuarios de nuestra aplicación, ya que de nada sirve que nosotros tengamos un acceso rápido al sistema si nuestros usuarios principales tienen una latencia que hace imposible que usen el sistema de forma eficaz. 
 De todas formas para nuestro caso consideramos que la mayoría de los usuarios de la aplicación estarán en España, y consideraré que mi latencia será similar a la de éstos usuarios.
@@ -43,10 +45,10 @@ Como se puede observar "France Central" es la que nos ofrece la mejor latencia. 
 
 ## 4. Sistema Operativo.
 
-Para visualizar la imágenes que tenemos disponibles localmente en Azure podemos usar la siguiente orden:
+Para visualizar la imágenes que tenemos disponibles en Azure podemos usar la siguiente orden:
 
 ~~~~
-az vm image list
+$az vm image list
 ~~~~
 
 Esto nos devuelve la información relativa a las imágenes disponibles en formato JSON:
@@ -157,19 +159,19 @@ Esto nos devuelve la información relativa a las imágenes disponibles en format
 No sólo disponemos de estas imágenes, esto sólo es una lista disponible offline, podemos acceder a la lista completa con la opción "--all", aunque esto ofrece una lista tan grande que nos conviene filtrarla un poco antes de realizar la búsqueda, por ejemplo, en caso de querer visualizar todas las imágenes que hay disponibles para la región de Francia Central y que contengan el nombre "Ubuntu" podemos usar la siguiente orden:
 
 ~~~~
-az vm image list --all --location francecentral --output table --offer Ubuntu
+$ az vm image list --all --location francecentral --output table --offer Ubuntu
 ~~~~
 
 --output table lo devuelve en una formato más legible en lugar de en JSON.
 
-Esto nos devuelve las siguientes imágenes:
+Ésto nos devuelve las siguientes imágenes:
 
 ![ImgFR](img/h4/imagenes-francia.png "Imágenes disponibles en Francia de Ubuntu")
 
-Esta captura tan sólo contiene una pequeña parte del total que se nos devuelve(en el caso de la región del Oeste de Reino Unido también obtenemos una lista igual de larga ), por lo que deberíamos de haber filtrado aún más la búsqueda. De todas formas, con esto podemos ver que contamos con un amplio abanico de imágenes posibles en ambas regiones.
+Ésta captura tan sólo contiene una pequeña parte del total que se nos devuelve(en el caso de la región del Oeste de Reino Unido también obtenemos una lista igual de larga ), por lo que deberíamos de haber filtrado aún más la búsqueda. De todas formas, con esto podemos ver que contamos con un amplio abanico de imágenes posibles en ambas regiones.
 
 
-Las imágenes que vamos a comparar son (basándonos en [éste artículo](https://www.techradar.com/news/best-linux-server-distro)):
+Basándonos en [éste artículo](https://www.techradar.com/news/best-linux-server-distro) vamos a comparar las siguientes imágenes:
 
 * Ubuntu Server 18.04, con la siguiente URN: Canonical:UbuntuServer:18.04-LTS:18.04.201812060
 
@@ -180,9 +182,9 @@ Las imágenes que vamos a comparar son (basándonos en [éste artículo](https:/
 Para ello primero creamos 2 grupos de recursos, uno para Francia central y otro para el Oeste de Reino Unido:
 
 ~~~~
-az group create -l francecentral -n FRrecGroup
+$ az group create -l francecentral -n FRrecGroup
 
-az group create -l ukwest -n UKrecGroup
+$ az group create -l ukwest -n UKrecGroup
 ~~~~
 
 A continuación crearemos 6 máquinas virtuales, ya que comprobaremos las tres imágenes en ambas regiones.
@@ -229,7 +231,7 @@ Ahora abrimos  el puerto 80 de nuestras MVs con:
 $ az vm open-port --resource-group <nombredelresourceGroup> --name <nombreMV> --port 80
 ~~~~
 
-Una vez hecho esto, despliego mi aplicación en cada una de las maquinas virtuales creadas, haciendo uso del Playbook de ansible y modificando los archivos de configuración para que la IP sea la de las MVs y el usuario sea el mismo, para Ubuntu 16 y para Debian se ha tenido que cambiar un poco el Playbook para que se instale la versión de nodejs que necesitamos, ya que no se hace de la misma forma que en Ubuntu 18. El [playbook modificado para Ubuntu 16](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/provision/playbook-u16.yml) y el [playbook modificado para Debian 8](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/provision/playbook.deb8.yml) los he añadido a la carpeta provisión del proyecto.
+Una vez hecho esto, despliego mi aplicación en cada una de las maquinas virtuales creadas, haciendo uso del Playbook de ansible del Hito anterior, modificando los archivos de configuración para que la IP sea la de las MVs y el usuario sea el mismo, para Ubuntu 16 y para Debian se ha tenido que cambiar un poco el Playbook para que se instale la versión de nodejs que necesitamos, ya que no se hace de la misma forma que en Ubuntu 18. El [playbook modificado para Ubuntu 16](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/provision/playbook-u16.yml) y el [playbook modificado para Debian 8](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/provision/playbook-deb8.yml) los he añadido a la carpeta provisión del proyecto.
 
 
 Los tiempos de despliegue(tiempo de ejecución total del Playbook, lo que incluye la instalación de los paquetes necesarios) en cada una de las MVs han sido:
@@ -313,7 +315,7 @@ Ya que nuestra aplicación no tiene muchos requerimientos de memoria podemos usa
 Para visualizar los tamaños disponibles en la región elegida usaremos:
 
 ~~~~
-$az vm list-sizes -l ukwest
+$ az vm list-sizes -l ukwest
 ~~~~
 
 Entre los planes más económicos y básicos tenemos:
@@ -325,7 +327,7 @@ Entre los planes más económicos y básicos tenemos:
 
 El precio del B1s es el menor y ofrece mejores prestaciones que el A0 estándar, pero puede que esto sólo se trate de una oferta temporal, por lo que vamos a comprobar el rendimiento de estos planes de memoria con nuestra aplicación.
 
-Para ello, he creado 3 máquinas virtuales con una imagen de Ubuntu 16 LTS en la región elegida, cada una con un plan diferente y he medido el tiempo que tardan en realizar los test de la aplicación(es decir, el tiempo en que tarda en ejecutarse npm test). Estos han sido los resultados obtenidos:
+Para ello, he creado 3 máquinas virtuales con una imagen de Ubuntu 16-04 LTS en la región elegida, cada una con un plan diferente y he medido el tiempo que tardan en realizar los test de la aplicación(es decir, el tiempo en que tarda en ejecutarse npm test). Estos han sido los resultados obtenidos:
 
 * A0 estándar: 2.458s 
 * B1s estándar: 1.363s
