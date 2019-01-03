@@ -1,0 +1,65 @@
+---
+- hosts: azure
+  become: yes
+  vars:
+    ruta_proyecto: home/usuario-azure/Cloud-Computing-Project
+
+  tasks:
+
+      
+    - name: Instala git
+      apt: 
+        pkg: git 
+        state: present 
+        update_cache: yes
+
+    - name: Descargar repositorio proyecto CC
+      git:
+        repo: https://github.com/AntonioJavierRP/Cloud-Computing-Project.git
+        dest: "{{ruta_proyecto}}"
+        version: master
+        force: yes
+
+    - name: NodeSource package key
+      apt_key:
+        state: present
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+    - name: NodeSource repository
+      apt_repository:
+        repo: 'deb https://deb.nodesource.com/node_8.x xenial main'
+
+    - name: Install NodeJS
+      apt: 
+        name: nodejs
+        state: present
+        
+
+    - name: Actualizar npm
+      npm:
+        path={{ruta_proyecto}}
+
+    - name: Instalar pm2
+      npm: 
+        name: pm2
+        global: yes
+
+    - name: Eliminar antiguo proceso en ejecucion de pm2
+      command: pm2 delete planificador
+      ignore_errors: yes
+
+    - name: redireccionar puerto 80
+      iptables:
+        table: nat
+        chain: PREROUTING
+        in_interface: eth0
+        protocol: tcp
+        match: tcp
+        destination_port: 80
+        jump: REDIRECT
+        to_ports: 3000
+
+    - name: Iniciar pm2
+      command: pm2 start {{ruta_proyecto}}/index.js --name planificador
+
+   

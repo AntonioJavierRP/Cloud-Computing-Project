@@ -1,0 +1,68 @@
+---
+- hosts: azure
+  become: yes
+  vars:
+    ruta_proyecto: home/usuario-azure/Cloud-Computing-Project
+
+  tasks:
+    - name: Hacer update
+      shell: apt update
+      
+    - name: Instala git
+      apt: 
+        pkg: git 
+        state: present 
+        update_cache: yes
+
+    - name: Descargar repositorio proyecto CC
+      git:
+        repo: https://github.com/AntonioJavierRP/Cloud-Computing-Project.git
+        dest: "{{ruta_proyecto}}"
+        version: master
+        force: yes
+
+    - name: Instala curl
+      apt:
+        name: curl
+        state: present
+
+    - name: Retrieve the installation script
+      command: curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+
+    - name: Run the script
+      command: sudo bash nodesource_setup.sh
+
+    - name: Install NodeJS
+      apt: 
+        name: nodejs
+        state: present
+        
+
+    - name: Actualizar npm
+      npm:
+        path={{ruta_proyecto}}
+
+    - name: Instalar pm2
+      npm: 
+        name: pm2
+        global: yes
+
+    - name: Eliminar antiguo proceso en ejecucion de pm2
+      command: pm2 delete planificador
+      ignore_errors: yes
+
+    - name: redireccionar puerto 80
+      iptables:
+        table: nat
+        chain: PREROUTING
+        in_interface: eth0
+        protocol: tcp
+        match: tcp
+        destination_port: 80
+        jump: REDIRECT
+        to_ports: 3000
+
+    - name: Iniciar pm2
+      command: pm2 start {{ruta_proyecto}}/index.js --name planificador
+
+   
