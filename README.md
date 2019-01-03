@@ -23,6 +23,12 @@ MV: 40.112.54.39
 
 [Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito3-provisionamiento.md) con información detallada sobre la creación de una máquina virtual en la nube con Azure y su posterior provisionamiento con Ansible.
 
+## Documentación sobre automatización de la creación de Máquinas Virtuales:
+
+MV2: 51.141.3.42
+
+[Enlace](https://github.com/AntonioJavierRP/Cloud-Computing-Project/blob/master/docs/hito4-automatizacion.md) con información detallada sobre la creación automática de Máquinas Virtuales en Azure mediante línea de órdenes.
+
 
 ## Cliente potencial
 Cualquier persona que esté interesada en poder organizar sus futuras sesiones de ejercicios de forma que las condiciones meteorológicas no se interpongan con estas.
