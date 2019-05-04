@@ -45,7 +45,7 @@ Podemos listar los siguientes servicios:
 - Servicio de Log para monitorización de la aplicación.
 
 
-Así mismo, existirá un microservicio del que obtendremos los datos meteorológicos de los próximos 15 días, pero este no lo desarrollaremos nosotros sino que utilizaremos el del proyecto de una compañera.
+Así mismo, existirá un microservicio del que obtendremos los datos meteorológicos de los próximos 15 días.
 
 
 
